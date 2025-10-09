@@ -1,3 +1,4 @@
+
 'use client';
 
 import {
@@ -8,23 +9,20 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {AppRouterInstance} from "next/dist/shared/lib/app-router-context.shared-runtime";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import {useRouter} from "next/navigation";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {LogOut} from "lucide-react";
 import NavItems from "@/components/NavItems";
-import {signOut} from "better-auth/api";
+import {signOut} from "@/lib/actions/auth.actions";
 
-const Userdropdown = ({user} : {user: User}) => {
-    const router: AppRouterInstance = useRouter();
+const UserDropdown = ({ user, initialStocks }: {user: User, initialStocks: StockWithWatchlistStatus[]}) => {
+    const router = useRouter();
 
-    // ✅ 1. Corrected async function syntax
     const handleSignOut = async () => {
         await signOut();
         router.push("/sign-in");
-    };
-
+    }
 
     return (
         <DropdownMenu>
@@ -65,15 +63,12 @@ const Userdropdown = ({user} : {user: User}) => {
                     <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
                     Logout
                 </DropdownMenuItem>
-
                 <DropdownMenuSeparator className="hidden sm:block bg-gray-600"/>
                 <nav className="sm:hidden">
-                    <NavItems />
+                    <NavItems initialStocks={initialStocks} />
                 </nav>
-
             </DropdownMenuContent>
         </DropdownMenu>
-    );
-};
-
-export default Userdropdown;
+    )
+}
+export default UserDropdown
