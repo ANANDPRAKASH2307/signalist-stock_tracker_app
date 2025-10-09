@@ -14,17 +14,17 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import {Button} from "@/components/ui/button";
 import {LogOut} from "lucide-react";
 import NavItems from "@/components/NavItems";
+import {signOut} from "better-auth/api";
 
-const Userdropdown = () => {
+const Userdropdown = ({user} : {user: User}) => {
     const router: AppRouterInstance = useRouter();
 
     // ✅ 1. Corrected async function syntax
-    const handleSignOut = async (): Promise<void> => {
-        // ✅ 2. Corrected router.push call
+    const handleSignOut = async () => {
+        await signOut();
         router.push("/sign-in");
     };
 
-    const user = { name: 'Anand' , email: 'cooldude69@gmail.com' };
 
     return (
         <DropdownMenu>
